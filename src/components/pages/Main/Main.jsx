@@ -1,32 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import NewsBanner from '../../NewsBanner/NewsBanner';
-import { getNews } from '../../../api/apiNews';
-import NewsList from '../../NewsList/NewsList';
+import React, { useEffect, useState } from "react";
+import NewsBanner from "../../NewsBanner/NewsBanner";
+import { getNews } from "../../../api/apiNews";
+import NewsList from "../../NewsList/NewsList";
+import Skeleton from "../../Skeleton/Skeleton";
 
 const Main = () => {
+  const [news, setNews] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const [news , setNews] = useState([])
-    
-    const featchNews = async() => {
-        try {
-            const response = await getNews()
-            setNews(response.news)
-            console.log(news)
-        } catch (error) {
-            console.log(error)
-        }
+  const featchNews = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getNews();
+      setNews(response.news);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    useEffect( () => {
-        featchNews()
-    } , [] )
+  useEffect(() => {
+    featchNews();
+  }, []);
 
-    return (
-        <main className='flex flex-col w-full'>
-            { news.length > 0 ? <NewsBanner item={news[0]} /> : null}
-            <NewsList news={news} />
-        </main>
-    );
+  return (
+    <main className="flex flex-col w-full">
+      {news.length != 0 && !isLoading ? (
+        <NewsBanner item={news[0]} />
+      ) : (
+        <Skeleton type={"banner"} count={1} />
+      )}
+      {!isLoading ? (
+        <NewsList news={news} />
+      ) : (
+        <Skeleton type={"item"} count={10} />
+      )}
+    </main>
+  );
 };
 
 export default Main;
