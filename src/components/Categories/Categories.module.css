@@ -1,0 +1,26 @@
+.item {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 32px;
+    background-color: #EFF1F3;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+
+.active {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 32px;
+    background-color: skyblue;
+    color: white
+}
+
+
+
+::-webkit-scrollbar {
+    display: none;
+}
