@@ -5,7 +5,7 @@ import clases from './NewsItem.module.css'
 const NewsItem = ({item}) => {
   return (
     <div>
-      <li className="flex gap-4">
+      <li className="flex gap-4 max-w-full">
         <div
             className={clases.image}
             style={ {backgroundImage: `url(${item.image}) `} }
