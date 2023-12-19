@@ -1,10 +1,16 @@
 .image{
     height: 55px;
-    width: 55px;
+
     background-color: rgb(194, 194, 194);
     background-position: center;
     background-size: cover;
     display: flex;
     flex-shrink: 0;
     margin-top: 8px;
+    width: 20%;
+}
+.wrapperItem {
+    display: flex;
+    gap: 10px;
+    overflow: hidden;
 }
