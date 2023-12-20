@@ -5,6 +5,8 @@ import NewsList from "../../NewsList/NewsList";
 import Skeleton from "../../Skeleton/Skeleton";
 import Pagination from "../../Pgination/Pagination";
 import Categories from "../../Categories/Categories";
+import Search from "../../Search/Search";
+import { useDebounce } from "../../Hooks/useDebounse";
 
 const Main = () => {
   const [news, setNews] = useState([]);
@@ -14,7 +16,9 @@ const Main = () => {
   const pageSize = 10;
   const [categories , setCategories] = useState([])
   const [ selectedCategory , setSelectedCategory] = useState('All')
-  
+  const [keywords , setKeywords] = useState('')
+
+  const debouncedInput = useDebounce(keywords , 1500)
   
   const featchNews = async () => {
     try {
@@ -22,7 +26,8 @@ const Main = () => {
       const response = await getNews({
         page_number: currentPage ,
         page_size: pageSize , 
-        category: selectedCategory === 'All' ? null : selectedCategory
+        category: selectedCategory === 'All' ? null : selectedCategory ,
+        keywords: debouncedInput
       });
       setNews(response.news);
       setIsLoading(false);
@@ -64,8 +69,7 @@ const Main = () => {
 
   useEffect(() => {
     featchNews();
-    featchCategories()
-  }, [currentPage , selectedCategory]);
+  }, [currentPage , selectedCategory , debouncedInput]);
 
   return (
     <main className="flex flex-col w-full">
@@ -73,6 +77,10 @@ const Main = () => {
         categories={categories} 
         selectedCategory={selectedCategory} 
         setSelectedCategory={setSelectedCategory} 
+      />
+      <Search 
+        keywords={keywords}
+        setKeywords={setKeywords} 
       />
       {news.length != 0 && !isLoading ? (
         <NewsBanner item={news[0]} />
