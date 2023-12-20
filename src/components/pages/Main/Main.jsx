@@ -27,7 +27,7 @@ const Main = () => {
         page_number: currentPage ,
         page_size: pageSize , 
         category: selectedCategory === 'All' ? null : selectedCategory ,
-        keywords: debouncedInput
+        keywords: keywords
       });
       setNews(response.news);
       setIsLoading(false);
